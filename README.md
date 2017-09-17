@@ -106,3 +106,13 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
         int k_set=7;
         wiFiLocationClient.setK(k_set);
 ```
+
+#### 1.获取和设定N值
+
+在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统会自动录入N次，我们可以通过 **getN()** 获取系统当前N值，或 **setN(int N)** 以设定系统的N值。系统默认的N值为10。
+
+```java
+        int N_get=wiFiLocationClient.getN();
+        int N_set=7;
+        wiFiLocationClient.setN(N_set);
+```
