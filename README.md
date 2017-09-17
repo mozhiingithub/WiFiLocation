@@ -119,10 +119,29 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 3.获取和设定Delay值
 
-在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。**虽无强制规定，但我们强烈不建议 将Delay设定为低于1000的值。**
+在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。**虽无强制规定，但我们强烈不建议将Delay设定为低于1000的值。**
 
 ```java
         int delay_get=wiFiLocationClient.Delay();
         int delay_set=3000;
         wiFiLocationClient.setDelay(delay_set);
+```
+
+#### 4.创建新地点
+
+我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException异常** ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并获取N次WiFi指纹信息。
+
+**Create(String location_name)** 还有两个重载形式，分别为 **Create(String location_name,int delay)** 和 **Create(String location_name,int delay,int n)** 。这两个重载形式可以修改设定本次创建操作的Delay值或N值，但不会修改系统的Delay值或N值。
+
+由于**Create(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
+```java
+String name="name_of_place";
+try {
+        wiFiLocationClient.Create(name);
+        } catch (WiFiLocationException e) {
+        e.printStackTrace();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+
 ```
