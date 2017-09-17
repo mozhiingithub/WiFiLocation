@@ -220,8 +220,7 @@ try {
 
 #### 8.删除所有地点
 
-我们可以使用 **ClearAll()** 方法来删除某地点。该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除数据库中的所有地点和WiFi指纹信息。
-
+我们可以使用 **ClearAll()** 来删除数据库中的所有地点其WiFi指纹信息。
 ```java
 wiFiLocationClient.ClearAll();
 ```
