@@ -1,5 +1,5 @@
 # WiFiLocation
-WiFiLocation是一款基于K-NN算法的简易WiFi定位SDK。它借助LitePal建立本地的WiFi指纹数据库，通过一系列API实现目标地点的WiFi指纹搜集、更新、重置或删除，以及输入目标地点，根据实时的WiFi指纹信息，输出当前位置为目标地点的可能性。
+WiFiLocation是一款基于K-NN算法的简易WiFi定位SDK。它借助**[LitePal](https://github.com/LitePalFramework/LitePal)**建立本地的WiFi指纹数据库，通过一系列API实现目标地点的WiFi指纹搜集、更新、重置或删除，以及输入目标地点，根据实时的WiFi指纹信息，输出当前位置为目标地点的可能性。
 
 相较于传统的C/S架构的WiFi定位系统，本系统实现了完全本地化的运行，所有功能均不会产生任何网络费用。另一方面，完全依赖本地的指纹数据库以及靠手机本身进行定位运算，也大大限制了这款定位系统的定位准确度和效率。
 
