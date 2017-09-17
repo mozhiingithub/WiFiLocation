@@ -23,7 +23,7 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 下面我们介绍WiFiLocation的安装和使用。
 
 ## 下载
-* **[WiFiLocation.jar](https://github.com/mozhiingithub/WiFiLocation/master/WiFiLocation.jar)**
+* **[WiFiLocation.jar](https://github.com/mozhiingithub/WiFiLocation/raw/master/WiFiLocation.jar)**
 
 ## 安装
 #### 1.加载jar包
