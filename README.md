@@ -19,3 +19,8 @@ WiFiLocation是一款基于K-NN算法的简易WiFi定位系统。它借助 **[Li
 #### 2.大量地点的识别定位
 
 WiFiLocation是完全本地化的定位系统，因而它的可存储地点信息数目受限于Sqlite数据库的性能以及手机的内存，其定位速度也受限于地点数目及手机性能。当数据库储存的地点信息过多时，WiFiLocation单次定位的所需时间会过长，“实时”定位的效果不再显现，整个系统的运行效益将不复存在。对于需要存储大量地点的开发者，我们同样不建议使用本系统。
+
+下面我们介绍WiFiLocation的安装和使用。
+
+## 下载
+* **[WiFiLocation.jar](https://github.com/mozhiingithub/WiFiLocation/blob/master/WiFiLocation.jar)**
