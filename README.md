@@ -160,7 +160,7 @@ try {
  * **Update(String location_name,int delay)** 
  * **Update(String location_name,int delay,int n)** 
  
- 这两个重载形式可以修改设定本次创建操作的Delay值或N值，但不会修改系统的Delay值或N值。
+ 这两个重载形式可以修改设定本次更新操作的Delay值或N值，但不会修改系统的Delay值或N值。
 
 由于**Update(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
 ```java
@@ -183,7 +183,7 @@ try {
  * **Reset(String location_name,int delay)** 
  * **Reset(String location_name,int delay,int n)** 
  
- 这两个重载形式可以修改设定本次创建操作的Delay值或N值，但不会修改系统的Delay值或N值。
+ 这两个重载形式可以修改设定本次重置操作的Delay值或N值，但不会修改系统的Delay值或N值。
 
 由于**Reset(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
 ```java
