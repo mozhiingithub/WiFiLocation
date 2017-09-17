@@ -77,7 +77,22 @@ dependencies {
     </list>
 </litepal>
 ```
+#### 5.初始化WiFiLocationClient
 
+在onCreate方法中对WifiLocationClient进行初始化：
 
+```java
+public class Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        WiFiLocationClient wiFiLocationClient=new WiFiLocationClient(this);
+    }
+    ...
+}
+```
+
+至此，我们完成了WiFiLocation的安装操作。
 
 
