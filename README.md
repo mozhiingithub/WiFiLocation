@@ -180,7 +180,7 @@ try {
 
 #### 6.重置地点指纹信息
 
-我们可以使用 **Reset(String location_name)** 方法来重置某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点的所有WiFi指纹信息，以Delay毫秒为间隔，重新扫描并录入N次WiFi指纹信息。
+我们可以使用 **Reset(String location_name)** 方法来重置某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点的所有WiFi指纹信息，然后以Delay毫秒为间隔，重新扫描并录入N次WiFi指纹信息。
 
 **Reset(String location_name)** 还有两个重载形式，分别为：
  * **Reset(String location_name,int delay)** 
