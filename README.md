@@ -80,9 +80,9 @@ dependencies {
     </list>
 </litepal>
 ```
-#### 5.初始化WiFiLocationClient
+#### 5.初始化定位对象WiFiLocationClient
 
-在onCreate方法中对WifiLocationClient进行初始化：
+在onCreate方法中对定位对象WifiLocationClient进行初始化：
 
 ```java
 public class Application {
