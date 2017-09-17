@@ -42,12 +42,42 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
-#### 3.配置LitePal
+#### 3.添加LitePal依赖
 
-##### ①加载LitePal包
+打开 **build.gradle** 文件并添加有以下依赖：
+``` groovy
+dependencies {
+    compile 'org.litepal.android:core:1.6.0'
+}
+```
 
-在
+#### 4.配置litepal.xml
 
-##### ②家
+在main文件夹中，新建 **assets** 文件夹，并新建 **litepal.xml** 文件，用以下代码进行覆盖：
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="location" />
+    <version value="6" />
+    <list>
+        <mapping class="mozhi.wifilocation.Database.WiFiScanResult"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Component"></mapping>
+        <mapping class="mozhi.wifilocation.Database.WiFiVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Location"></mapping>
+        <mapping class="mozhi.wifilocation.Database.CddVtr"></mapping>
+        <mapping class="mozhi.wifilocation.Database.CddMac"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Leftmix"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Rightmix"></mapping>
+        <mapping class="mozhi.wifilocation.Database.ReferVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.ScanVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.PredictResult"></mapping>
+        <mapping class="mozhi.wifilocation.Database.PredictResult2"></mapping>
 
-是
+
+    </list>
+</litepal>
+```
+
+
+
+
