@@ -232,7 +232,7 @@ WiFiLocation是基于K-NN算法的定位系统，单次扫描定位后，可获�
 
 该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将返回排名值。当本次定位结果中并没有出现目标地点时，系统将返回 **0** 值。
 
-**LocationRank(String location_name)** 还有一个重载形式，分别为：
+**LocationRank(String location_name)** 还有一个重载形式：
  * **LocationRank(String location_name,int delay)** 
  
  这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
