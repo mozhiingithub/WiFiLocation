@@ -44,7 +44,7 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 
 #### 3.添加LitePal依赖
 
-打开 **build.gradle** 文件并添加有以下依赖：
+打开 **build.gradle** 文件并添加以下依赖：
 ``` groovy
 dependencies {
     compile 'org.litepal.android:core:1.6.0'
@@ -95,4 +95,14 @@ public class Application {
 
 至此，我们完成了WiFiLocation的安装操作。
 
+## 使用
 
+#### 1.获取和设定K值
+
+WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** 获取系统当前K值，或 **setK(int k)** 以设定系统的K值。系统默认的K值为10。
+
+```java
+        int k_get=wiFiLocationClient.getK();
+        int k_set=7;
+        wiFiLocationClient.setK(k_set);
+```
