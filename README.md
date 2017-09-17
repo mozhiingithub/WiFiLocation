@@ -28,4 +28,16 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 ## 安装
 #### 1.加载jar包
 
-打开Android Studio，创建项目，将下载好的WiFiLocation.jar复制到到libs文件夹当中，并右键点击“Add As Library”。
+打开Android Studio，创建项目，将下载好的WiFiLocation.jar复制到libs文件夹当中，并右键点击“Add As Library”。
+
+#### 2.添加权限
+
+在 **AndroidManifest.xml** 文件中加入以下代码：
+
+''' xml
+<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+'''
