@@ -97,7 +97,7 @@ public class Application {
 
 ## 使用
 
-### 设定、录入或删除
+### 调参、录入、删除等方法
 
 #### 1.获取和设定K值
 
@@ -222,8 +222,30 @@ try {
 wiFiLocationClient.ClearAll();
 ```
 
-### 定位
+### 定位方法
 
 #### 1.获取目标地点定位排名
 
-WiFiLocation是基于K-NN算法的定位系统，单次
+WiFiLocation是基于K-NN算法的定位系统，单次扫描定位后，可获取K个匹配度最高的WiFi指纹信息，以地点为单位进行count运算，得到候选地点各自的指纹信息数，最终获得一个排名。依据K-NN算法，我们可以认定，排名第一的地点，最有可能是当前地点，而排名靠后的地点，亦可能在当前地点的附近。
+
+我们可以使用 **LocationRank(String location_name)** 方法以获取以**location_name** 为名的地点在本次定位结果中的排名，返回值类型为int。
+
+该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将返回排名值。当本次定位结果中并没有出现目标地点时，系统将返回 **0** 值。
+
+**LocationRank(String location_name)** 还有一个重载形式，分别为：
+ * **LocationRank(String location_name,int delay)** 
+ 
+ 这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
+ 
+ 由于**LocationRank(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
+```java
+String name="name_of_place";
+try {
+        int rank=wiFiLocationClient.LocationRank(name);
+        } catch (WiFiLocationException e) {
+        e.printStackTrace();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+
+```
