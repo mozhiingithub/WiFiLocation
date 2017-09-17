@@ -129,7 +129,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 4.创建新地点
 
-我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException异常** ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并获取N次WiFi指纹信息。
+我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException异常** ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
 
 **Create(String location_name)** 还有两个重载形式，分别为：
  * **Create(String location_name,int delay)** 
