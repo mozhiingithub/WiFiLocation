@@ -220,7 +220,7 @@ try {
 
 #### 8.删除所有地点
 
-我们可以使用 **ClearAll()** 来删除数据库中的所有地点其WiFi指纹信息。
+我们可以使用 **ClearAll()** 来删除数据库中的所有地点及WiFi指纹信息。
 ```java
 wiFiLocationClient.ClearAll();
 ```
