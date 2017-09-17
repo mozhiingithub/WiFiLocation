@@ -119,7 +119,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 3.获取和设定Delay值
 
-在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。虽无强制规定，但我们强烈 **不建议** 将Delay设定为低于1000的值。
+在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。**虽无强制规定，但我们强烈不建议 将Delay设定为低于1000的值。**
 
 ```java
         int delay_get=wiFiLocationClient.Delay();
