@@ -41,3 +41,13 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
+
+#### 3.配置LitePal
+
+##### ①加载LitePal包
+
+在
+
+##### ②家
+
+是
