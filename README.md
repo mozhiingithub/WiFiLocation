@@ -44,6 +44,7 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
+**注意：自 Android 6.0后，系统获取WiFi扫描结果需保证手机GPS定位选项开启，且程序中关于定位的权限必须为“允许”，否则系统每次获取扫描结果将为空值。开发者需自行设计定位选项状态及权限获取状态检查机制。**
 
 #### 3.添加LitePal依赖
 
