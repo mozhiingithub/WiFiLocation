@@ -34,10 +34,10 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 
 在 **AndroidManifest.xml** 文件中加入以下代码：
 
-''' xml
+``` xml
 <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-'''
+```
