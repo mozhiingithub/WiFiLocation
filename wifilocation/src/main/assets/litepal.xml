@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="location" />
+    <version value="6" />
+    <list>
+        <mapping class="mozhi.wifilocation.Database.WiFiScanResult"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Component"></mapping>
+        <mapping class="mozhi.wifilocation.Database.WiFiVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Location"></mapping>
+        <mapping class="mozhi.wifilocation.Database.CddVtr"></mapping>
+        <mapping class="mozhi.wifilocation.Database.CddMac"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Leftmix"></mapping>
+        <mapping class="mozhi.wifilocation.Database.Rightmix"></mapping>
+        <mapping class="mozhi.wifilocation.Database.ReferVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.ScanVector"></mapping>
+        <mapping class="mozhi.wifilocation.Database.PredictResult"></mapping>
+        <mapping class="mozhi.wifilocation.Database.PredictResult2"></mapping>
+
+
+    </list>
+</litepal>
