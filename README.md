@@ -97,6 +97,8 @@ public class Application {
 
 ## 使用
 
+### 设定、录入或删除
+
 #### 1.获取和设定K值
 
 WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** 获取系统当前K值，或 **setK(int k)** 以设定系统的K值。系统默认的K值为10。
@@ -214,8 +216,14 @@ try {
 
 #### 8.删除所有地点
 
-我们可以使用 **ClearAll()** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除数据库中的所有地点及其所有WiFi指纹信息。
+我们可以使用 **ClearAll()** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除数据库中的所有地点和WiFi指纹信息。
 
 ```java
 wiFiLocationClient.ClearAll();
 ```
+
+### 定位
+
+#### 1.获取目标地点定位排名
+
+WiFiLocation是基于K-NN算法的定位系统，单次
