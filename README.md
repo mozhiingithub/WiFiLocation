@@ -129,7 +129,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 4.创建新地点
 
-我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException异常** ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
+我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException**异常 ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
 
 **Create(String location_name)** 还有两个重载形式，分别为：
  * **Create(String location_name,int delay)** 
@@ -148,4 +148,74 @@ try {
         e.printStackTrace();
         }
 
+```
+
+#### 5.更新地点指纹信息
+
+我们可以使用 **Update(String location_name)** 方法来更新某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将为以**location_name** 为名的地点，以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
+
+**Update(String location_name)** 还有两个重载形式，分别为：
+ * **Update(String location_name,int delay)** 
+ * **Update(String location_name,int delay,int n)** 
+ 
+ 这两个重载形式可以修改设定本次创建操作的Delay值或N值，但不会修改系统的Delay值或N值。
+
+由于**Update(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
+```java
+String name="name_of_place";
+try {
+        wiFiLocationClient.Update(name);
+        } catch (WiFiLocationException e) {
+        e.printStackTrace();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+
+```
+
+#### 6.重置地点指纹信息
+
+我们可以使用 **Reset(String location_name)** 方法来重置某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点的所有WiFi指纹信息，以Delay毫秒为间隔，重新扫描并录入N次WiFi指纹信息。
+
+**Reset(String location_name)** 还有两个重载形式，分别为：
+ * **Reset(String location_name,int delay)** 
+ * **Reset(String location_name,int delay,int n)** 
+ 
+ 这两个重载形式可以修改设定本次创建操作的Delay值或N值，但不会修改系统的Delay值或N值。
+
+由于**Reset(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
+```java
+String name="name_of_place";
+try {
+        wiFiLocationClient.Reset(name);
+        } catch (WiFiLocationException e) {
+        e.printStackTrace();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+
+```
+
+#### 7.删除地点
+
+我们可以使用 **Clear(String location_name)** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点及其所有WiFi指纹信息。
+
+```java
+String name="name_of_place";
+try {
+        wiFiLocationClient.Clear(name);
+        } catch (WiFiLocationException e) {
+        e.printStackTrace();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+
+```
+
+#### 8.删除所有地点
+
+我们可以使用 **ClearAll()** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除数据库中的所有地点及其所有WiFi指纹信息。
+
+```java
+wiFiLocationClient.ClearAll();
 ```
