@@ -24,3 +24,8 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 
 ## 下载
 * **[WiFiLocation.jar](https://github.com/mozhiingithub/WiFiLocation/blob/master/WiFiLocation.jar)**
+
+## 安装
+#### 1.加载jar包
+
+打开Android Studio，创建项目，将下载好的WiFiLocation.jar复制到到libs文件夹当中，并右键点击“Add As Library”。
