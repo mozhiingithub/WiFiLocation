@@ -260,16 +260,21 @@ try {
 ```
 #### 2.获取目标地点定位排名列表
 
-我们可以使用 **getLocateResult()** 方法来获取定位算法生成的排名列表。其定位过程与 **LocationRank(String location_name)** 相同。
+我们可以使用 **getLocateResult()** 方法来获取定位算法生成的排名列表。其定位过程与 **LocationRank(String location_name)** 方法相同。
 
  **getLocateResult()** 还有一个重载形式：
  *  **getLocateResult(int k)** 
  
 这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
+
 由于 **getLocateResult()**  是耗时操作，所以开发者不应在主线程当中使用本方法。
 ```java
 List<PredictResult2> result2s=wiFiLocationClient.getLocateResult();
 ```
+## 更新
+#### 17.9.21
+* 添加 **getLocation()** 方法
+* 添加 **getLocateResult()** 方法
 
 ## 联系作者
 
