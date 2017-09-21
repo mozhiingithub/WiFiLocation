@@ -1,5 +1,5 @@
 # WiFiLocation
-WiFiLocation是一款基于K-NN算法的简易WiFi定位系统。它借助 **[LitePal](https://github.com/LitePalFramework/LitePal)** 建立本地的WiFi指纹数据库，通过一系列API实现目标地点的WiFi指纹搜集、更新、重置或删除，以及定位操作。
+WiFiLocation是一款基于K-NN算法的简易WiFi定位系统。它借助 **[LitePal](https://github.com/LitePalFramework/LitePal)** 建立本地的WiFi指纹数据库，通过一系列API实现目标地点的WiFi指纹搜集、更新、重置或删除，以及当前位置的定位识别。
 
 相较于传统的C/S架构的WiFi定位系统，本系统实现了完全本地化的运行，所有功能均不会产生任何网络费用。另一方面，完全依赖本地的指纹数据库以及靠手机本身进行定位运算，也大大限制了这款定位系统的定位准确度和效率。
 
@@ -44,6 +44,7 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
+**注意：自 Android 6.0后，系统在获取WiFi扫描结果前需保证手机GPS定位选项开启，且程序中关于定位的权限必须为“允许”，否则系统每次获取扫描结果将为空值。开发者需自行设计定位选项状态及权限获取状态检查机制。**
 
 #### 3.添加LitePal依赖
 
@@ -104,7 +105,7 @@ public class Application {
 
 #### 1.获取和设定K值
 
-WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** 获取系统当前K值，或 **setK(int k)** 以设定系统的K值。系统默认的K值为10。
+WiFiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** 获取系统当前K值，或 **setK(int k)** 以设定系统的K值。系统默认的K值为10。
 
 ```java
         int k_get=wiFiLocationClient.getK();
@@ -114,7 +115,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 2.获取和设定N值
 
-在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统会自动录入N次，我们可以通过 **getN()** 获取系统当前N值，或 **setN(int n)** 以设定系统的N值。系统默认的N值为10。
+在WiFiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统会自动录入N次，我们可以通过 **getN()** 获取系统当前N值，或 **setN(int n)** 以设定系统的N值。系统默认的N值为10。
 
 ```java
         int n_get=wiFiLocationClient.getN();
@@ -124,7 +125,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 3.获取和设定Delay值
 
-在WifiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。虽无强制规定，但我们**强烈不建议**将Delay设定为低于1000的值。
+在WiFiLocation当中，调用一次涉及WiFi指纹录入操作的API，系统录入N次指纹的间隔为Delay毫秒，我们可以通过 **getDelay()** 获取系统当前Delay值，或 **setDelay(int delay)** 以设定系统的Delay值。系统默认的Delay值为1000。虽无强制规定，但作者**强烈不建议**将Delay设定为低于1000的值。
 
 ```java
         int delay_get=wiFiLocationClient.Delay();
@@ -134,7 +135,7 @@ WifiLocation是基于K-NN算法的定位系统，我们可以通过 **getK()** �
 
 #### 4.创建新地点
 
-我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名是否已在数据库中存在。若存在，则系统抛出 **WiFiLocationException**异常 ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
+我们可以使用 **Create(String location_name)** 方法创建新地点。该方法首先会判断输入的地点名在数据库中是否存在。若存在，则系统抛出 **WiFiLocationException**异常 ；若不存在，则系统创建以 **location_name** 为名的新地点，并以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
 
 **Create(String location_name)** 还有两个重载形式，分别为：
  * **Create(String location_name,int delay)** 
@@ -157,7 +158,7 @@ try {
 
 #### 5.更新地点指纹信息
 
-我们可以使用 **Update(String location_name)** 方法来更新某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将为以**location_name** 为名的地点，以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
+我们可以使用 **Update(String location_name)** 方法来更新某地点的WiFi指纹信息。该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将为以**location_name** 为名的地点，以Delay毫秒为间隔，扫描并录入N次WiFi指纹信息。
 
 **Update(String location_name)** 还有两个重载形式，分别为：
  * **Update(String location_name,int delay)** 
@@ -180,7 +181,7 @@ try {
 
 #### 6.重置地点指纹信息
 
-我们可以使用 **Reset(String location_name)** 方法来重置某地点的WiFi指纹信息。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点的所有WiFi指纹信息，然后以Delay毫秒为间隔，重新扫描并录入N次WiFi指纹信息。
+我们可以使用 **Reset(String location_name)** 方法来重置某地点的WiFi指纹信息。该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点的所有WiFi指纹信息，然后以Delay毫秒为间隔，重新扫描并录入N次WiFi指纹信息。
 
 **Reset(String location_name)** 还有两个重载形式，分别为：
  * **Reset(String location_name,int delay)** 
@@ -203,7 +204,7 @@ try {
 
 #### 7.删除地点
 
-我们可以使用 **Clear(String location_name)** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点及其所有WiFi指纹信息。
+我们可以使用 **Clear(String location_name)** 方法来删除某地点。该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除以**location_name** 为名的地点及其所有WiFi指纹信息。
 
 ```java
 String name="name_of_place";
@@ -219,8 +220,7 @@ try {
 
 #### 8.删除所有地点
 
-我们可以使用 **ClearAll()** 方法来删除某地点。该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将清除数据库中的所有地点和WiFi指纹信息。
-
+我们可以使用 **ClearAll()** 来删除数据库中的所有地点及WiFi指纹信息。
 ```java
 wiFiLocationClient.ClearAll();
 ```
@@ -233,7 +233,7 @@ WiFiLocation是基于K-NN算法的定位系统，单次扫描定位后，可获�
 
 我们可以使用 **LocationRank(String location_name)** 方法以获取以**location_name** 为名的地点在本次定位结果中的排名，返回值类型为int。
 
-该方法首先会判断输入的地点名是否在数据库中存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将返回排名值。当本次定位结果中并没有出现目标地点时，系统将返回 **0** 值。
+该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将返回排名值。若本次定位结果中没有目标地点，系统将返回 **0** 值。
 
 **LocationRank(String location_name)** 还有一个重载形式：
  * **LocationRank(String location_name,int k)** 
