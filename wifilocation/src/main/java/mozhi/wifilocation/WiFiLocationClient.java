@@ -311,6 +311,134 @@ public class WiFiLocationClient {
         }
     }
 
+    public List<Location> getLocation(){
+        return DataSupport.findAll(Location.class);
+    }
+
+    public List<PredictResult2> getLocateResult(){
+        DataSupport.deleteAll(CddVtr.class);
+        DataSupport.deleteAll(CddMac.class);
+        DataSupport.deleteAll(ScanVector.class);
+        DataSupport.deleteAll(ReferVector.class);
+        DataSupport.deleteAll(WiFiScanResult.class);
+        DataSupport.deleteAll(PredictResult.class);
+        DataSupport.deleteAll(PredictResult2.class);
+        DataSupport.deleteAll(Leftmix.class);
+        DataSupport.deleteAll(Rightmix.class);
+        LoadCurrentScanResults();
+        db.beginTransaction();
+        db.execSQL("insert into cddvtr(rid) select distinct wifivector.id\n" +
+                "from component,wifivector \n" +
+                "where/*检索可能的wifi向量，只要其分量含有扫描结果mac，就挑出来*/\n" +
+                "component.wifivector_id=wifivector.id \n" +
+                "and\n" +
+                "component.mac in\n" +
+                "(/*剔除扫描结果中未在库中出现过的mac*/\n" +
+                "select distinct mac from wifiscanresult where mac in\n" +
+                "       (\n" +
+                "       select distinct mac from component\n" +
+                "       )\n" +
+                ");");
+        db.execSQL("insert into cddmac(mac) select distinct mac \n" +
+                "from wifivector,component \n" +
+                "where \n" +
+                "component.wifivector_id=wifivector.id /*联结条件*/\n" +
+                "and \n" +
+                "wifivector.id in(/*检索出候选向量的所有mac，去重*/\n" +
+                "select rid from cddvtr\n" +
+                ");");
+        db.execSQL("insert into leftmix(rid,mac) select cddvtr.rid ,cddmac.mac from cddvtr,cddmac;");
+        db.execSQL("insert into rightmix(rid,mac,level) select  wifivector_id,mac,level\n" +
+                "from wifivector,component \n" +
+                "where\n" +
+                "component.wifivector_id=wifivector.id \n" +
+                "and\n" +
+                "wifivector.id in (select rid from cddvtr);");
+        db.execSQL("insert into refervector(rid,mac,level) select leftmix.rid,leftmix.mac,ifnull(rightmix.level,-100)" +
+                " from leftmix left outer join rightmix " +
+                "on " +
+                "leftmix.rid=rightmix.rid " +
+                " and " +
+                " leftmix.mac=rightmix.mac;");
+        db.execSQL("insert into scanvector(mac,level) select cddmac.mac,ifnull(wifiscanresult.level,-100) from cddmac left outer join wifiscanresult on cddmac.mac=wifiscanresult.mac ;");
+        db.execSQL("insert into predictresult(name,sum) select location.name ,avg(abs(refervector.level-scanvector.level)) as s \n" +
+                "from location,wifivector,refervector,scanvector \n" +
+                "where refervector.mac=scanvector.mac \n" +
+                "and\n" +
+                "refervector.rid=wifivector.id\n" +
+                "and\n" +
+                "wifivector.location_id=location.id\n" +
+                "group by refervector.rid order by s limit "+String.valueOf(K)+";");
+        db.execSQL("insert into predictresult2(name,sum) select predictresult.name,count(*) from predictresult group by predictresult.name order by count(*) desc;");
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        List<PredictResult2> list=DataSupport.findAll(PredictResult2.class);
+        return DataSupport.findAll(PredictResult2.class);
+    }
+
+    public List<PredictResult2> getLocateResult(int k){
+        int original_k=getK();
+        setK(k);
+        DataSupport.deleteAll(CddVtr.class);
+        DataSupport.deleteAll(CddMac.class);
+        DataSupport.deleteAll(ScanVector.class);
+        DataSupport.deleteAll(ReferVector.class);
+        DataSupport.deleteAll(WiFiScanResult.class);
+        DataSupport.deleteAll(PredictResult.class);
+        DataSupport.deleteAll(PredictResult2.class);
+        DataSupport.deleteAll(Leftmix.class);
+        DataSupport.deleteAll(Rightmix.class);
+        LoadCurrentScanResults();
+        db.beginTransaction();
+        db.execSQL("insert into cddvtr(rid) select distinct wifivector.id\n" +
+                "from component,wifivector \n" +
+                "where/*检索可能的wifi向量，只要其分量含有扫描结果mac，就挑出来*/\n" +
+                "component.wifivector_id=wifivector.id \n" +
+                "and\n" +
+                "component.mac in\n" +
+                "(/*剔除扫描结果中未在库中出现过的mac*/\n" +
+                "select distinct mac from wifiscanresult where mac in\n" +
+                "       (\n" +
+                "       select distinct mac from component\n" +
+                "       )\n" +
+                ");");
+        db.execSQL("insert into cddmac(mac) select distinct mac \n" +
+                "from wifivector,component \n" +
+                "where \n" +
+                "component.wifivector_id=wifivector.id /*联结条件*/\n" +
+                "and \n" +
+                "wifivector.id in(/*检索出候选向量的所有mac，去重*/\n" +
+                "select rid from cddvtr\n" +
+                ");");
+        db.execSQL("insert into leftmix(rid,mac) select cddvtr.rid ,cddmac.mac from cddvtr,cddmac;");
+        db.execSQL("insert into rightmix(rid,mac,level) select  wifivector_id,mac,level\n" +
+                "from wifivector,component \n" +
+                "where\n" +
+                "component.wifivector_id=wifivector.id \n" +
+                "and\n" +
+                "wifivector.id in (select rid from cddvtr);");
+        db.execSQL("insert into refervector(rid,mac,level) select leftmix.rid,leftmix.mac,ifnull(rightmix.level,-100)" +
+                " from leftmix left outer join rightmix " +
+                "on " +
+                "leftmix.rid=rightmix.rid " +
+                " and " +
+                " leftmix.mac=rightmix.mac;");
+        db.execSQL("insert into scanvector(mac,level) select cddmac.mac,ifnull(wifiscanresult.level,-100) from cddmac left outer join wifiscanresult on cddmac.mac=wifiscanresult.mac ;");
+        db.execSQL("insert into predictresult(name,sum) select location.name ,avg(abs(refervector.level-scanvector.level)) as s \n" +
+                "from location,wifivector,refervector,scanvector \n" +
+                "where refervector.mac=scanvector.mac \n" +
+                "and\n" +
+                "refervector.rid=wifivector.id\n" +
+                "and\n" +
+                "wifivector.location_id=location.id\n" +
+                "group by refervector.rid order by s limit "+String.valueOf(K)+";");
+        db.execSQL("insert into predictresult2(name,sum) select predictresult.name,count(*) from predictresult group by predictresult.name order by count(*) desc;");
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        setK(original_k);
+        return DataSupport.findAll(PredictResult2.class);
+    }
+
     public void Update(String location_name) throws WiFiLocationException, InterruptedException {
         if(isLocationExist(location_name)){
             Location location=GetLocationFromName(location_name);
