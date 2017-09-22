@@ -135,6 +135,7 @@ public class WiFiLocationClient {
             int original_delay=getDelay();
             setDelay(delay);
             int original_n=getN();
+            setN(n);
             Location location=new Location();
             location.setName(location_name);
             location.save();
