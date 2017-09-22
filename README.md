@@ -26,7 +26,7 @@ WiFiLocation是完全本地化的定位系统，因而它的可存储地点信�
 下面介绍WiFiLocation的安装和使用。
 
 ## 下载
-* **[WiFiLocation.jar](https://github.com/mozhiingithub/WiFiLocation/raw/master/WiFiLocation.jar)**
+* **[WiFiLocation.jar](https://raw.githubusercontent.com/mozhiingithub/WiFiLocation/master/WiFiLocation.jar)**
 
 ## 安装
 #### 1.加载jar包
@@ -224,6 +224,12 @@ try {
 ```java
 wiFiLocationClient.ClearAll();
 ```
+#### 9.获取所有地点
+
+我们可以使用 **getLocation()** 来获取数据库中的所有地点。
+```java
+List<Location> locations=wifiLocationClient.getLocation();
+```
 
 ### 定位方法
 
@@ -252,6 +258,23 @@ try {
         }
 
 ```
+#### 2.获取目标地点定位排名列表
+
+我们可以使用 **getLocateResult()** 方法来获取定位算法生成的排名列表。其定位过程与 **LocationRank(String location_name)** 方法相同。
+
+ **getLocateResult()** 还有一个重载形式：
+ *  **getLocateResult(int k)** 
+ 
+这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
+
+由于 **getLocateResult()**  是耗时操作，所以开发者不应在主线程当中使用本方法。
+```java
+List<PredictResult2> result2s=wiFiLocationClient.getLocateResult();
+```
+## 更新
+#### 17.9.21
+* 添加 **getLocation()** 方法
+* 添加 **getLocateResult()** 方法
 
 ## 联系作者
 
