@@ -272,6 +272,9 @@ try {
 List<PredictResult2> result2s=wiFiLocationClient.getLocateResult();
 ```
 ## 更新
+#### 17.9.22
+* 修复 **Create(String location_name, int delay, int n)** 漏洞
+
 #### 17.9.21
 * 添加 **getLocation()** 方法
 * 添加 **getLocateResult()** 方法
