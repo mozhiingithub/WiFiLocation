@@ -101,7 +101,7 @@ public class Application {
 
 ## 使用
 
-### 调参、录入、删除等方法
+### 录入、更新、删除相关方法
 
 #### 1.获取和设定K值
 
@@ -231,20 +231,36 @@ wiFiLocationClient.ClearAll();
 List<Location> locations=wifiLocationClient.getLocation();
 ```
 
-### 定位方法
+### 定位相关方法
 
-#### 1.获取目标地点定位排名
+#### 1.获取和设定M值
+WiFiLocation是基于K-NN算法的定位系统，但考虑到定位算法本身较为简单，极端情况下，会出现当前位置离系统预测地点较远时，系统仍依据K-NN算法判定当前位置已接近预测低点，导致较大误差的出现，遂引入曼哈顿距离阈值的机制，对K-NN的定位判断进行距离层面的修正，从而提高定位准确度。在本SDK中，曼哈顿距离阈值记为 **M** 值。
 
-WiFiLocation是基于K-NN算法的定位系统，单次扫描定位后，可获取K个匹配度最高的WiFi指纹信息，以地点为单位进行count运算，得到候选地点各自的指纹信息数，最终获得一个排名。依据K-NN算法，我们可以认定，排名第一的地点，最有可能是当前地点，而排名靠后的地点，亦可能在当前地点的附近。
+我们可以通过 **getM()** 获取系统当前M值，或 **setM(int m)** 以设定系统的M值。系统默认的K值为10。
+
+```java
+        int m_get=wiFiLocationClient.getM();
+        int m_set=15;
+        wiFiLocationClient.setM(m_set);
+```
+
+
+
+#### 2.获取目标地点定位排名
+
+WiFiLocation是基于K-NN算法的定位系统，单次扫描后，计算所有可能WiFi指纹信息与当前位置的WiFi指纹信息的曼哈顿距离，由小到大进行排序，获取前K个匹配度最高的WiFi指纹信息，再对这K个以地点作阈值为M的筛选，剔除超过M值的WiFi指纹信息，再以地址为单位进行count运算，得到候选地点各自的指纹信息数，最终获得一个排名。依据K-NN算法，我们可以认定，排名第一的地点，最有可能是当前地点，而排名靠后的地点，亦可能在当前地点的附近。
 
 我们可以使用 **LocationRank(String location_name)** 方法以获取以**location_name** 为名的地点在本次定位结果中的排名，返回值类型为int。
 
 该方法首先会判断输入的地点名在数据库中是否存在。若不存在，则系统抛出 **WiFiLocationException**异常 ；若存在，则系统将返回排名值。若本次定位结果中没有目标地点，系统将返回 **0** 值。
 
-**LocationRank(String location_name)** 还有一个重载形式：
+**LocationRank(String location_name)** 还有两个重载形式：
  * **LocationRank(String location_name,int k)** 
+ * **LocationRank(String location_name,int k,int m)** 
  
- 这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
+ 这个重载形式可以修改设定本次定位操作的K值或M值，但不会修改系统的K值或M值。
+
+ 值得注意的是，系统没有提供单次仅修改M值的重载形式，所以开发者可选择调用 **getM()** 和 **setM(int m)** 方法来实现该效果。
  
  由于**LocationRank(String location_name)** 是耗时操作，所以开发者不应在主线程当中使用本方法。
 ```java
@@ -258,20 +274,29 @@ try {
         }
 
 ```
-#### 2.获取目标地点定位排名列表
+#### 3.获取目标地点定位排名列表
 
 我们可以使用 **getLocateResult()** 方法来获取定位算法生成的排名列表。其定位过程与 **LocationRank(String location_name)** 方法相同。
 
- **getLocateResult()** 还有一个重载形式：
- *  **getLocateResult(int k)** 
- 
-这个重载形式可以修改设定本次定位操作的K值，但不会修改系统的K值。
+ **getLocateResult()** 还有两个重载形式：
+ *  **getLocateResult(int k)**
+ *  **getLocateResult(int k,int m)** 
+
+ 这个重载形式可以修改设定本次定位操作的K值或M值，但不会修改系统的K值或M值。
+
+ 值得注意的是，系统没有提供单次仅修改M值的重载形式，所以开发者可选择调用 **getM()** 和 **setM(int m)** 方法来实现该效果。
 
 由于 **getLocateResult()**  是耗时操作，所以开发者不应在主线程当中使用本方法。
 ```java
 List<PredictResult2> result2s=wiFiLocationClient.getLocateResult();
 ```
 ## 更新
+
+#### 17.9.25
+* 修改了系统的定位算法，引入曼哈顿距离阈值机制
+* 新增 **getM()** 和 **setM(int m)** 方法
+* 修改 **LocationRank(String location_name)** 和 **getLocateResult()** 方法，并增加了重载形式
+
 #### 17.9.22
 * 修复 **Create(String location_name, int delay, int n)** 漏洞
 
