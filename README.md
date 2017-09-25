@@ -236,7 +236,7 @@ List<Location> locations=wifiLocationClient.getLocation();
 #### 1.获取和设定M值
 WiFiLocation是基于K-NN算法的定位系统，但考虑到定位算法本身较为简单，极端情况下，会出现当前位置离系统预测地点较远时，系统仍依据K-NN算法判定当前位置已接近预测低点，导致较大误差的出现，遂引入曼哈顿距离阈值的机制，对K-NN的定位判断进行距离层面的修正，从而提高定位准确度。在本SDK中，曼哈顿距离阈值记为 **M** 值。
 
-我们可以通过 **getM()** 获取系统当前M值，或 **setM(int m)** 以设定系统的M值。系统默认的K值为10。
+我们可以通过 **getM()** 获取系统当前M值，或 **setM(int m)** 以设定系统的M值。系统默认的M值为10。
 
 ```java
         int m_get=wiFiLocationClient.getM();
